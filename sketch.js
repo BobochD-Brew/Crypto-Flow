@@ -5,22 +5,24 @@ let particles = [num];
 let backcolor;
 let dotcolor;
 let backcolor2;
-let size;
+let width;
+let height;
 let seed = 99;
 function setup() {
     let params = getURLParams();
     seed = params.id;
-    size = min(windowWidth, windowHeight)
+    width = windowWidth;
+    height = windowHeight;
     randomSeed(seed);
     noiseSeed(seed);
     backcolor = color(random(255),random(255),random(255),10)
     backcolor2 = color(random(255),random(255),random(255),10)
     dotcolor =  color(random(255),random(255),random(255))
-    createCanvas(size, size);
+    createCanvas(width, height);
     background(dotcolor)
     noStroke();
     for (let i=0; i<num; i++) {
-        let loc = createVector(size*random(1.2), random(1)*size, 2);
+        let loc = createVector(width*random(1.2), random(1)*height, 2);
         let angle = 0;
         let dir = createVector(cos(angle), sin(angle));
         let speed = random(0.5,2);
@@ -29,15 +31,16 @@ function setup() {
 }
 
 function windowResized() {
-    size = min(windowWidth, windowHeight)
-    resizeCanvas(size, size);
+    width = windowWidth;
+    height = windowHeight;
+    resizeCanvas(width, height);
 }
 function draw() {
     blendMode(OVERLAY );
     fill(backcolor);
     blendMode(NORMAL );
     noStroke();
-    rect(0, 0, size, size);
+    rect(0, 0, width, height);
     for (let i=0; i<particles.length; i++) {
         particles[i].run();
     }
@@ -64,8 +67,8 @@ class Particle{
     }
     checkEdges(){
         if (this.loc.x<0 || this.loc.x>size || this.loc.y<0 || this.loc.y>size) {   
-            this.loc.x = random(size*1.2);
-            this.loc.y = random(size);
+            this.loc.x = width*random(1.2);
+            this.loc.y = height*random(1);
         }
     }
     update(){
