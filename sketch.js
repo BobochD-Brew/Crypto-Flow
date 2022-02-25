@@ -93,7 +93,7 @@ class Particle{
         this.loc.add(vel);
     }
     checkEdges(){
-        if (this.loc.x<0 || this.loc.x>size || this.loc.y<0 || this.loc.y>size) {   
+        if (this.loc.x<0 || this.loc.x>width || this.loc.y<0 || this.loc.y>height) {   
             this.loc.x = width*random(1.2);
             this.loc.y = height*random(1);
         }
