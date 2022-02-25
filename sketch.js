@@ -1,5 +1,5 @@
 let num = 2000;
-let noiseScale=500;
+let noiseScale=500.0;
 let noiseStrength=1;
 let particles = [num];
 let backcolor;
@@ -39,24 +39,21 @@ function windowResized() {
 function draw() {
     blendMode(OVERLAY );
     fill(backcolor);
-    blendMode(NORMAL );
+    blendMode(BLEND );
     noStroke();
     rect(0, 0, width, height);
-    for (let i=0; i<particles.length; i++) {
+    for (let i=0; i<num; i++) {
         particles[i].run();
     }
-}
-function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    num -= 200;
-  } else if (keyCode === RIGHT_ARROW) {
-    num += 200;
-  }else if (keyCode === UP_ARROW) {
-    noiseScale -= 50;
-  }else if (keyCode === DOWN_ARROW) {
-    noiseScale += 50;
+  if (keyIsDown(UP_ARROW)) {
+    noiseScale = noiseScale*0.8;
+  }
+
+  if (keyIsDown(DOWN_ARROW)) {
+    noiseScale = noiseScale * 1.1;
   }
 }
+
 function mousePressed() {
   clicking = true
 }
