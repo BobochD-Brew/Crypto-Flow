@@ -46,6 +46,17 @@ function draw() {
         particles[i].run();
     }
 }
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+    num -= 200;
+  } else if (keyCode === RIGHT_ARROW) {
+    num += 200;
+  }else if (keyCode === UP_ARROW) {
+    noiseScale -= 50;
+  }else if (keyCode === DOWN_ARROW) {
+    noiseScale += 50;
+  }
+}
 function mousePressed() {
   clicking = true
 }
