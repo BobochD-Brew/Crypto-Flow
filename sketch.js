@@ -8,6 +8,7 @@ let backcolor2;
 let width;
 let height;
 let seed = 99;
+let clicking;
 function setup() {
     let params = getURLParams();
     seed = params.id;
@@ -45,6 +46,12 @@ function draw() {
         particles[i].run();
     }
 }
+function mousePressed() {
+  clicking = true
+}
+function mouseReleased() {
+  clicking = false
+}
 class Particle{
     constructor(_loc,_dir,_speed){
         this.loc = _loc;
@@ -60,6 +67,14 @@ class Particle{
         let angle=noise(this.loc.x/noiseScale, this.loc.y/noiseScale, frameCount*0.01/noiseScale)*TWO_PI*noiseStrength; //0-2PI
         this.dir.x = cos(angle);
         this.dir.y = sin(angle);
+        if (mouseX < width*8/9 && mouseX > width*1/9 && mouseY <= height*8/9 && mouseY >= height*1/9){
+            if(this.loc.dist(createVector(mouseX,mouseY)) < size/6){
+                let direct = createVector(mouseX - this.loc.x,mouseY - this.loc.y)
+                direct = direct.normalize();
+                if(clicking) direct.mult(-1);
+                this.dir = p5.Vector.lerp(this.dir ,direct,1- this.loc.dist(createVector(mouseX,mouseY))/(size/6));
+            }
+        }
         let vel = this.dir.copy();
         let d =1;
         vel.mult(this.speed*d);
