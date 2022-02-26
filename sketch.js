@@ -9,6 +9,7 @@ let width;
 let height;
 let seed = 99;
 let clicking;
+let stopt;
 function setup() {
     let params = getURLParams();
     seed = params.id;
@@ -53,7 +54,11 @@ function draw() {
     noiseScale = noiseScale * 1.1;
   }
 }
-
+function keyPressed() {
+  if (key == 'p') {
+    stopt = !stopt;
+  }
+}
 function mousePressed() {
   clicking = true
 }
@@ -76,6 +81,7 @@ class Particle{
         let angle=noise(this.loc.x/noiseScale, this.loc.y/noiseScale, frameCount*0.01/noiseScale)*TWO_PI*noiseStrength; //0-2PI
         this.dir.x = cos(angle);
         this.dir.y = sin(angle);
+      if(stopt) this.dir=createVector(0,0);
         if (mouseX < width*8/9 && mouseX > width*1/9 && mouseY <= height*8/9 && mouseY >= height*1/9){
             if(this.loc.dist(createVector(mouseX,mouseY)) < size2/6){
                 let direct = createVector(mouseX - this.loc.x,mouseY - this.loc.y)
