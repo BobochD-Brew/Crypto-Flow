@@ -1,0 +1,15 @@
+ 
+    <!DOCTYPE html><html><head>
+    <script src="p5.min.js"></script><script src="p5.dom.min.js"></script><link rel="stylesheet" type="text/css" href="style.css"><meta charset="utf-8"><style>
+    html, body {
+    margin: 0;
+    padding: 0;
+    overflow:hidden;
+    }
+    canvas {
+    display: block;
+    }
+    </style></head><body><script>
+    let num=2e3,noiseScale=500,noiseStrength=1,particles=[num],backcolor,dotcolor,backcolor2,width,height,seed=99,clicking,stopt;function setup(){seed=177,width=windowWidth,height=windowHeight,randomSeed(seed),noiseSeed(seed),backcolor=color(random(255),random(255),random(255),10),backcolor2=color(random(255),random(255),random(255),10),dotcolor=color(random(255),random(255),random(255)),createCanvas(width,height),background(dotcolor),noStroke();for(let a=0;a<num;a++){let c=createVector(width*random(1.2),random(1)*height,2),b=0,d=createVector(cos(b),sin(b)),e=random(.5,2);particles[a]=new Particle(c,d,e)}}function windowResized(){resizeCanvas(width=windowWidth,height=windowHeight)}function draw(){blendMode(OVERLAY),fill(backcolor),blendMode(BLEND),noStroke(),rect(0,0,width,height);for(let a=0;a<num;a++)particles[a].run();keyIsDown(UP_ARROW)&&(noiseScale*=.8),keyIsDown(DOWN_ARROW)&&(noiseScale*=1.1)}function keyPressed(){"p"==key&&(stopt=!stopt)}function mousePressed(){clicking=!0}function mouseReleased(){clicking=!1}class Particle{constructor(a,b,c){this.loc=a,this.dir=b,this.speed=c}run(){this.move(),this.checkEdges(),this.update()}move(){let b=min(width,height),c=noise(this.loc.x/noiseScale,this.loc.y/noiseScale,.01*frameCount/noiseScale)*TWO_PI*noiseStrength;if(this.dir.x=cos(c),this.dir.y=sin(c),stopt&&(this.dir=createVector(0,0)),mouseX<8*width/9&&mouseX>1*width/9&&mouseY<=8*height/9&&mouseY>=1*height/9&&this.loc.dist(createVector(mouseX,mouseY))<b/6){let a=createVector(mouseX-this.loc.x,mouseY-this.loc.y);a=a.normalize(),clicking&&a.mult(-1),this.dir=p5.Vector.lerp(this.dir,a,1-this.loc.dist(createVector(mouseX,mouseY))/(b/6))}let d=this.dir.copy();d.mult(1*this.speed),this.loc.add(d)}checkEdges(){(this.loc.x<0||this.loc.x>width||this.loc.y<0||this.loc.y>height)&&(this.loc.x=width*random(1.2),this.loc.y=height*random(1))}update(){fill(dotcolor),ellipse(this.loc.x,this.loc.y,this.loc.z)}}
+    </script></body></html>
+    
